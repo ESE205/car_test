@@ -1,4 +1,5 @@
 from picar import PiCar, test, configure
+from picar
 import time
 import cv2
 import argparse
@@ -67,20 +68,15 @@ time.sleep(1)
 print('...')
 
 print('Testing camera')
-camera = Picamera2()
-camera.start()
-array = camera.capture_array("main")
-img = cv2.cvtColor(array, cv2.COLOR_RGB2BGR)
-cv2.imwrite('testing.png',img)
+img = car.get_image()
+img_bgr = cv2.cvtColor(array, cv2.COLOR_RGB2BGR)
+cv2.imwrite('testing.png',img_bgr)
 print('image taken!')
 time.sleep(1)
 print('...')
 
 print('Reading photoresistor')
 print(f'{car.adc.read_adc(0)}')
-
-print('Reading switch state')
-print(f'{car.adc.read_adc(7)}')
 
 print('done!')
 
