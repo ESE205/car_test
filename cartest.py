@@ -1,5 +1,4 @@
 from picar import PiCar, test, configure
-from picar
 import time
 import cv2
 import argparse
@@ -69,7 +68,7 @@ print('...')
 
 print('Testing camera')
 img = car.get_image()
-img_bgr = cv2.cvtColor(array, cv2.COLOR_RGB2BGR)
+img_bgr = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 cv2.imwrite('testing.png',img_bgr)
 print('image taken!')
 time.sleep(1)
