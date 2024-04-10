@@ -77,6 +77,7 @@ print('...')
 print('Reading photoresistor')
 print(f'{car.adc.read_adc(0)}')
 
+print('Stop servos and processes')
+car.stop()
+
 print('done!')
-
-
