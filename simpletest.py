@@ -1,21 +1,12 @@
-# Simple example of reading the MCP3008 analog input channels and printing
-# them all out.
-# Author: Tony DiCola
-# License: Public Domain
+from picar import PiCar, test, configure
 import time
+import argparse
 
-# Import SPI and MCP3008 library.
-import RPi.GPIO as GPIO
-import Adafruit_MCP3008
-from Adafruit_GPIO.GPIO import RPiGPIOAdapter as Adafruit_GPIO_Adapter
+parser = argparse.ArgumentParser(description="data for this program")
+parser.add_argument('--mock_car',action='store_true',default=False,help='if not present, run on car, otherwise mock hardware')
+args = parser.parse_args()
 
-# Software SPI configuration:
-CLK  = 23
-MISO = 21
-MOSI = 19
-CS   = 24
-gpio_adapter = Adafruit_GPIO_Adapter(GPIO, mode=GPIO.BOARD)
-mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI, gpio=gpio_adapter)
+car = PiCar(mock_car=args.mock_car,threaded=True)
 
 print('Reading MCP3008 values, press Ctrl-C to quit...')
 # Print nice channel column headers.
@@ -27,8 +18,13 @@ while True:
     values = [0]*8
     for i in range(8):
         # The read_adc function will get the value of the specified channel (0-7).
-        values[i] = mcp.read_adc(i)
+        values[i] = car.adc.read_adc(i)
     # Print the ADC values.
     print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
     # Pause for half a second.
     time.sleep(0.5)
+
+print('Stop servos and processes')
+car.stop()
+
+print('done!')
